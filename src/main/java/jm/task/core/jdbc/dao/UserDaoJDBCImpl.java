@@ -13,7 +13,6 @@ public class UserDaoJDBCImpl implements UserDao {
     private Statement statement;
     private ResultSet resultSet;
     private Connection conn = util.getConnection();
-    private int count = 1;
     public UserDaoJDBCImpl() {
     }
 
@@ -42,13 +41,12 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
     public void saveUser(String name, String lastName, byte age){
-        String insert = "INSERT INTO User VALUES(?, ?, ?, ?)";
+        String insert = "INSERT INTO User (name, lastName, age) VALUES(?, ?, ?)";
         try {
             pstatement = conn.prepareStatement(insert);
-            pstatement.setLong(1, count++);
-            pstatement.setString(2, name);
-            pstatement.setString(3, lastName);
-            pstatement.setByte(4, age);
+            pstatement.setString(1, name);
+            pstatement.setString(2, lastName);
+            pstatement.setByte(3, age);
             pstatement.execute();
             System.out.println("User с именем - " + name + " добавлен в базу данных");
         } catch (SQLException e) {
@@ -74,10 +72,10 @@ public class UserDaoJDBCImpl implements UserDao {
             resultSet = statement.executeQuery(str);
             while (resultSet.next()) {
                 User user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setName(resultSet.getString("name"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setAge(resultSet.getByte("age"));
+                user.setId(resultSet.getLong(1));
+                user.setName(resultSet.getString(2));
+                user.setLastName(resultSet.getString(3));
+                user.setAge(resultSet.getByte(4));
                 users.add(user);
             }
         }catch (SQLException e) {
