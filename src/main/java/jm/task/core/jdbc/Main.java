@@ -1,5 +1,6 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws SQLException {
         List<User> user;
-        UserDaoJDBCImpl table = new UserDaoJDBCImpl();
+        UserDaoHibernateImpl table = new UserDaoHibernateImpl();
         table.createUsersTable();
         table.saveUser("Zara", "Ali", (byte) 18);
         table.saveUser("Faruk", "Nari", (byte) 24);
